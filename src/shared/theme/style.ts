@@ -5,13 +5,26 @@ import { typography } from './typography'
 
 class Style {
   navigationHeader: ViewStyle = {
-    shadowColor: color.mediumGray,
+    elevation:0,
+    shadowColor: color.lightGray,
     shadowRadius: 4,
     shadowOpacity: 0.4,
     shadowOffset: {
       height: 2,
       width: 0,
-    }
+    },
+    borderBottomWidth: 0,
+
+  }
+
+  shadow: ViewStyle = {
+    shadowColor: color.mediumGrey,
+    shadowRadius: 6,
+    shadowOpacity: 0.4,
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
   }
 
   swiperDot: ViewStyle = {

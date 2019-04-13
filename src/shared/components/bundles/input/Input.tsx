@@ -7,7 +7,7 @@ const boxStyle = {
     marginTop: spacing.smaller,
     marginBottom: spacing.smaller,
     flexDirection: 'row',
-    borderColor: color.warmGray,
+    borderColor: color.lightGray,
     backgroundColor: color.white,
     width: '100%',
     ...style.textInputValue,
