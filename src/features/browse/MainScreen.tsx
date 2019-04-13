@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text as RNText, Keyboard } from 'react-native';
 import { Button, color } from '../../shared'
-
+import firebase from 'firebase'
 
 type Props = {
 
@@ -19,19 +19,18 @@ export class MainScreen extends Component<Props, State> {
 		}
 	}
 
+
+
 	render() {
 
 		return (
 			<View style={styles.container}>
-
-				
 				<Button
 					size='large'
-					text="login.loginButton"
+					text="settingsHome.logOutLink"
 					style={{ width: '100%' }}
-					// onPress={() => this.submit()}
+					onPress={() => firebase.auth().signOut()}
 				/>
-
 			</View>
 		)
 
@@ -41,6 +40,7 @@ export class MainScreen extends Component<Props, State> {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: color.offWhite,
 		padding: 20

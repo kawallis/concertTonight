@@ -6,13 +6,15 @@ const utility = {
 
   // try not to end up using these colors directly from your app, but they're here if you need 'em.
 const palette = {
+    primary: '#794ACF',
+    secondary: '#3D4852',
     warmStone: '#E2DED7',
     warmStone50: '#E2DED790',
     coolGray: '#666666',
     coolGray50: '#66666680',
     warmGray: '#979797',
-    offWhite: '#F5F3F4',
-    black: '#000000',
+    offWhite: '#F8FAFC',
+    black: '#22292F',
 
     // Beiges
     darkPink: '#D1A9B1',
@@ -41,7 +43,9 @@ const palette = {
     shimmerPrimary: '#F1F5F8',
     shimmerSecondary: '#F8FAFC'
   }
-
+  
+  const primary = palette.primary
+  const secondary = palette.secondary
   const shimmerPrimary = palette.shimmerPrimary
   const shimmerSecondary = palette.shimmerSecondary
   const warmStone = palette.warmStone
@@ -80,6 +84,7 @@ const palette = {
     ...utility,
     warmStone,
     warmStone50,
+    secondary,
     shimmerPrimary,
     shimmerSecondary,
     coolGray,
@@ -92,6 +97,7 @@ const palette = {
     lightPink,
     lightBeige,
     white,
+    primary,
     offPink,
     offWhite,
     offBeige,

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text as RNText, Keyboard } from 'react-native';
-import { Input, Text, spacing, Button, Logo, color, typography, size, translate } from '../../shared'
+import { style, Input, Text, spacing, Button, Logo, color, typography, size, translate } from '../../shared'
 import validate from "validate.js"
-import { StackActions, NavigationActions } from 'react-navigation';
 import firebase from 'firebase'
-
+import { AuthSession } from 'expo'
+import { getAuthorizationCode, getTokens } from '../../../authSpotify'
 
 const constraints = {
 	email: {
@@ -34,7 +34,7 @@ type State = {
 
 const INTITAL_STATE = {
 	email: 'wally@wall.com',
-	password: 'password1234!!',
+	password: 'Password1234',
 	emailErrors: null,
 	passwordErrors: null
 }
@@ -121,13 +121,25 @@ export class LoginScreen extends Component<Props, State> {
 						alignSelf: 'flex-start',
 						textDecorationLine: 'underline'
 					}}
-					// onPress={() => this.props.navigation.navigate('forgotPassword')}
+				// onPress={() => this.props.navigation.navigate('forgotPassword')}
 				/>
 				<Button
 					size='large'
 					text="login.loginButton"
 					style={{ width: '100%' }}
 					onPress={() => this.submit()}
+				/>
+
+				<Button
+					size='large'
+					text="login.spotify"
+					style={{ 
+						...style.shadow,
+						width: '100%', marginTop: 25,
+						backgroundColor: '#1DB954', borderRadius: 25,
+						
+					}}
+					onPress={() => getTokens()}
 				/>
 
 			</View>

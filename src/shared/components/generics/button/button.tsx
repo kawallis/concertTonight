@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { TouchableOpacity, ViewStyle, TextStyle, TouchableOpacityProperties } from 'react-native'
 import { Text } from '../text'
-import { color, spacing, size, typography } from '../../../theme';
+import { color, spacing, size, typography, style } from '../../../theme';
 
 export interface ButtonProps extends TouchableOpacityProperties {
     /** The straight up text to use. */
@@ -18,10 +18,13 @@ export interface ButtonProps extends TouchableOpacityProperties {
     noTranslate?: boolean
 }
 
+
 const DEFAULT: ViewStyle = {
+    ...style.shadow,
     backgroundColor: color.black,
     width: '100%',
     height: 50,
+    borderRadius: 25,
     justifyContent: 'center'
 }
 
