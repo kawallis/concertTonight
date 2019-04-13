@@ -59,6 +59,15 @@ export const getTokens = async () => {
                 }`,
         });
         let result = await response.json();
+
+
+        await AsyncStorage.setItem('accessToken', result.access_token);
+        await AsyncStorage.setItem('refreshToken', result.refresh_token);
+        const expirationTime = new Date().getTime() + result.expires_in * 1000;
+
+        await AsyncStorage.setItem('expirationTime', expirationTime.toString());
+
+
         let res = await fetch('https://api.spotify.com/v1/me', {
             method: 'GET',
             headers: {
@@ -68,8 +77,8 @@ export const getTokens = async () => {
         })
 
         let userInfo = await res.json()
-
-        let token = await fetch('https://api.spotify.com/v1/me', {
+        await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo))
+        let token = await fetch('https://v88wb2hjx8.execute-api.us-west-2.amazonaws.com/dev/createFirebaseToken', {
             method: 'POST',
             headers: {
                 'Content-Type': "application/json",
