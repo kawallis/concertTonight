@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`empty render 1`] = `
+<Image
+  source={undefined}
+  style={
+    Object {
+      "padding": 10,
+      "resizeMode": "contain",
+    }
+  }
+/>
+`;
