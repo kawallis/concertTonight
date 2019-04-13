@@ -90,8 +90,6 @@ export const getTokens = async () => {
 
         let customToken = await token.json()
 
-        console.log(userInfo)
-        console.log(customToken)
 
         // {
         //     "access_token": "BQB-_j0zQ9WiS_FUZt0kOfJgcBwYh5zTk4NkvY1pTktPdF_WCciEGXR3U2qzF0Uy0uc1pqTtNhR6YMfGfAHcJpRCZZlg0oPJdPSSz-fCVe0UEVk2XNYn2UxHtuMw2_DC00DnGVuaAMpiG7Xw0mjIv4ygYnvuqNiIGWdo5EOnCjKHdLEQ2tSzsp4-yAEZyPwguQR2LrqFdTm0BoUeWafnjCTqeReGGzA7N9wwOYxKB9_A29qAsxGzdLmt",
@@ -101,7 +99,15 @@ export const getTokens = async () => {
         //     "token_type": "Bearer",
         //   }
         let firebaseRes = await firebase.auth().signInWithCustomToken(customToken)
-        console.log(firebaseRes)
+
+        firebase.firestore().collection("Users").doc(userInfo.id).set({
+            name: userInfo.display_name,
+            spotifyUrl: userInfo.href,
+            profileImages: userInfo.images,
+            access_token: result.access_token,
+            refreshToken: result.refresh_token,
+            expirationTime: expirationTime.toString(),
+        })
 
         return result
     } catch(err){

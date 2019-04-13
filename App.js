@@ -12,7 +12,6 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.unsub = auth.onAuthStateChanged((user) => {
-      console.log('AUTH CHANGED', user)
       if (user) {
         this.setState({ isReady: true }, () => {
           this.navigator &&
@@ -21,7 +20,6 @@ export default class App extends React.Component {
           );
         })
         
-
       } else {
         this.setState({ isReady: true }, () => {
           // this.navigator &&

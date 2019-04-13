@@ -42,7 +42,6 @@ export class MapContainer extends Component<Props, State> {
     renderMarkers = () => {
         const { events } = this.props
         if (events) {
-            console.log(events)
             const markers = events.map((marker) =>
                 (<Marker
                     key={`marker-${marker.id}`}
@@ -50,7 +49,6 @@ export class MapContainer extends Component<Props, State> {
                     title={marker.title}
                     description={marker.description}
                 />))
-            console.log(markers)
             return markers
         } else
             return []
