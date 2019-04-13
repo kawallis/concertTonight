@@ -535,6 +535,7 @@ export const en = {
     welcomeBack: 'Welcome back!',
     loginButton: 'SIGN IN TO YOUR ACCOUNT',
     cancel: 'Cancel',
+    spotify: 'LOGIN WITH SPOTIFY',
     noAccount: "NEW HERE? CREATE AN ACCOUNT",
     registerButton: 'Register',
     forgotPassword: 'FORGOT PASSWORD?',
