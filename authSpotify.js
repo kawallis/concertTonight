@@ -1,6 +1,7 @@
 import { AuthSession } from 'expo';
 import { encode as btoa } from 'base-64';
-
+import { AsyncStorage } from 'react-native'
+import firebase from 'firebase'
 const scopesArr = ['user-modify-playback-state', 'user-read-currently-playing', 'user-read-playback-state', 'user-library-modify',
     'user-library-read', 'playlist-read-private', 'playlist-read-collaborative', 'playlist-modify-public',
     'playlist-modify-private', 'user-read-recently-played', 'user-top-read'];
@@ -16,6 +17,8 @@ export const getAuthorizationCode = async () => {
             clientSecret: '736118a51bc148fdbcdd862820891019',
         }
         const redirectUrl = AuthSession.getRedirectUrl(); //this will be something like https://auth.expo.io/@your-username/your-app-slug
+        console.log('REDIRECT', redirectUrl)
+        
         const result = await AuthSession.startAsync({
             authUrl:
                 'https://accounts.spotify.com/authorize' +
@@ -27,7 +30,7 @@ export const getAuthorizationCode = async () => {
                 encodeURIComponent(redirectUrl),
         })
 
-        console.log(result)
+        console.log("AUTHORIZATIONCODE", result)
         return result.params.code
 
     } catch (err) {
@@ -42,6 +45,7 @@ export const getTokens = async () => {
         const credentials = {
             clientId: '13b69baaeddb410cb4887e521450ce45',
             clientSecret: '736118a51bc148fdbcdd862820891019',
+            redirectUri: 'https://auth.expo.io/@kawallis/your'
         } //we wrote this function above (could also run this outside of the functions and store the credentials in local scope)
         const credsB64 = btoa(`${credentials.clientId}:${credentials.clientSecret}`);
         const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -55,6 +59,15 @@ export const getTokens = async () => {
                 }`,
         });
         let result = await response.json();
+
+        // {
+        //     "access_token": "BQB-_j0zQ9WiS_FUZt0kOfJgcBwYh5zTk4NkvY1pTktPdF_WCciEGXR3U2qzF0Uy0uc1pqTtNhR6YMfGfAHcJpRCZZlg0oPJdPSSz-fCVe0UEVk2XNYn2UxHtuMw2_DC00DnGVuaAMpiG7Xw0mjIv4ygYnvuqNiIGWdo5EOnCjKHdLEQ2tSzsp4-yAEZyPwguQR2LrqFdTm0BoUeWafnjCTqeReGGzA7N9wwOYxKB9_A29qAsxGzdLmt",
+        //     "expires_in": 3600,
+        //     "refresh_token": "AQCugp1dwf7LUMw2kK4ODe4Q6HVDjc6gFaNype2_BO1TQ7TEjoTCCP8RG0vXE2QWMyjOR6a6oEP8Vrf5kAlkBTASQc2jmtZk4mevIzrcxFsp40ZDwwpipJX76dinv_tpNTdr8A",
+        //     "scope": "playlist-read-private playlist-read-collaborative user-modify-playback-state user-library-read user-library-modify playlist-modify-private playlist-modify-public user-read-playback-state user-read-currently-playing user-read-recently-played user-top-read",
+        //     "token_type": "Bearer",
+        //   }
+
         console.log('RESSSS', result)
         return result
     } catch(err){
@@ -69,7 +82,7 @@ export const refreshTokens = async () => {
             clientSecret: '736118a51bc148fdbcdd862820891019',
         } //we wrote this function above
         const credsB64 = btoa(`${credentials.clientId}:${credentials.clientSecret}`);
-        const refreshToken = await getUserData('refreshToken');
+        const refreshToken = await AsyncStorage.getItem('refreshToken');
         const response = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {
@@ -89,11 +102,11 @@ export const refreshTokens = async () => {
             } = responseJson;
 
             const expirationTime = new Date().getTime() + expiresIn * 1000;
-            await setUserData('accessToken', newAccessToken);
+            await AsyncStorage.setItem('accessToken', newAccessToken);
             if (newRefreshToken) {
-                await setUserData('refreshToken', newRefreshToken);
+                await AsyncStorage.setItem('refreshToken', newRefreshToken);
             }
-            await setUserData('expirationTime', expirationTime);
+            await AsyncStorage.setItem('expirationTime', expirationTime);
         }
     } catch (err) {
         console.error(err)
