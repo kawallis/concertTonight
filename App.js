@@ -12,11 +12,12 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.unsub = auth.onAuthStateChanged((user) => {
+
       if (user) {
         this.setState({ isReady: true }, () => {
           this.navigator &&
           this.navigator.dispatch(
-            NavigationActions.navigate({ routeName: "main" })
+            NavigationActions.navigate({ routeName: "tabs" })
           );
         })
         

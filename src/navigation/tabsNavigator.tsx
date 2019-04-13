@@ -1,8 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator, StackActions, NavigationActions } from 'react-navigation';
 import { translate, BackButton, typography, color, style, Icon } from '../shared'
-import { AuthNavigator } from './authNavigator'
-import { MainScreen } from '../features/browse'
+import { MainScreen, SettingsScreen } from '../features/browse'
 
 const tabImageStyle = {
     width: 25,
@@ -11,9 +10,9 @@ const tabImageStyle = {
 
 export const routes = {
     auth: {
-        screen: AuthNavigator,
+        screen: SettingsScreen,
         navigationOptions: {
-            title: "Auth Screen",
+            title: "Settings Screen",
             tabBarTestID: 'authScreen',
             header: null,
             tabBarIcon: ({ focused, tintColor }) =>
