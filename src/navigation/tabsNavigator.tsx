@@ -1,7 +1,8 @@
 import React from 'react'
 import { createBottomTabNavigator, StackActions, NavigationActions } from 'react-navigation';
 import { translate, BackButton, typography, color, style, Icon } from '../shared'
-import { MainScreen, SettingsScreen } from '../features/browse'
+import { MainScreen, SettingsScreen, ChatScreen } from '../features/browse'
+import { Ionicons } from '@expo/vector-icons';
 
 const tabImageStyle = {
     width: 25,
@@ -9,7 +10,7 @@ const tabImageStyle = {
 }
 
 export const routes = {
-    auth: {
+    settings: {
         screen: SettingsScreen,
         navigationOptions: {
             title: "Settings Screen",
@@ -17,6 +18,16 @@ export const routes = {
             header: null,
             tabBarIcon: ({ focused, tintColor }) =>
                 <Icon icon='settingsIcon' brand={focused} style={tabImageStyle} />,
+        },
+    },
+    chat: {
+        screen: ChatScreen,
+        navigationOptions: {
+            title: "Chat",
+            tabBarTestID: 'authScreen',
+            header: null,
+            tabBarIcon: ({ focused, tintColor }) =>
+                <Ionicons name="md-chatboxes" size={32} color={color.darkGray} />
         },
     },
     main: {
