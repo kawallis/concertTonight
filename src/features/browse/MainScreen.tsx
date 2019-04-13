@@ -55,7 +55,6 @@ export class MainScreen extends Component<Props, State> {
 			location: "San Francisco"
 		})
 		fetch(`${BASE_URL}?${params}`).then(res => res.json()).then(result => {
-			console.log("Results :", result)
 			this.setState({ events: result.events.event, loading: false })
 		}).catch(e => {
 			console.log(e)
@@ -71,7 +70,6 @@ export class MainScreen extends Component<Props, State> {
 				"Content-Type": "application/json"
 			}
 		}).then(res => res.json()).then(result => {
-			console.log("Spotify results :", result)
 			this.setState({ artists: result.items, loading: false })
 		}).catch(e => {
 			console.log(e)
@@ -112,7 +110,6 @@ export class MainScreen extends Component<Props, State> {
 	renderList = () => {
 		const { viewStyle, events, listPref } = this.state
 		const selectedEvents = this.filterEvents()
-		console.log("EVENTS =>", events)
 
 		return (
 			<FlatGrid
