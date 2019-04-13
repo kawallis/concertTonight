@@ -1,16 +1,15 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation'
-import { AuthNavigator } from './authNavigator'
-import { MainScreen } from '../features/browse'
+
+import { TabsNavigator } from './tabsNavigator';
 
 const routes = {
-  auth: { screen: AuthNavigator },
-  main: {screen: MainScreen}
+  tabs: { screen: TabsNavigator },
 }
 
 const MainNavigator = createStackNavigator(routes, {
   headerMode: 'none',
   mode: 'modal',
-  initialRouteName: 'auth',
+  initialRouteName: 'tabs',
   navigationOptions: {
     headerStyle: {
       elevation: 0,
