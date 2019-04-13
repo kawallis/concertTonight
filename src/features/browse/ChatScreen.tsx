@@ -46,7 +46,6 @@ export class ChatScreen extends Component<Props, State> {
     componentWillUnmount() {
         this.keyboardDidShowListener.remove();
         this.keyboardDidHideListener.remove();
-        Expo.Speech.stop();
     }
 
     _keyboardDidShow = (e) => {
@@ -123,8 +122,7 @@ export class ChatScreen extends Component<Props, State> {
                 },
             ]
 
-            // Expo.Speech.stop()
-            // Expo.Speech.speak(responseJson.result.fulfillment.speech)
+
 
             this.setState(previousState => ({
                 gifted: GiftedChat.append(previousState.gifted, answers),
@@ -165,9 +163,6 @@ export class ChatScreen extends Component<Props, State> {
             <View style={{
                 height: this.state.height,
                 backgroundColor: color.offWhite,
-                marginBottom: 15,
-                paddingBottom: 15,
-
             }}>
                 {this.renderChat()}
             </View>
@@ -179,5 +174,5 @@ export class ChatScreen extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: color.offWhite,
-    },
+    }
 });

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions, AsyncStorage, ActivityIndicator } from 'react-native';
-import { Button, color, Icon, Line } from '../../shared'
+import { StyleSheet, View, Text, Dimensions, AsyncStorage, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Button, color, Icon, Line, style } from '../../shared'
 import { FlatGrid } from 'react-native-super-grid';
 import { MapContainer } from './MapContainer';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo'
 const queryString = require('query-string');
 
 const API_KEY = "dMDG9fX9tbrqqXgL"
@@ -17,7 +18,6 @@ type Props = {
 type State = {
 
 }
-const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 function getRandomColor() {
@@ -130,10 +130,18 @@ export class MainScreen extends Component<Props, State> {
 				renderItem={({ item }) => {
 					const color = getRandomColor();
 					return (
-						<View style={[styles.itemContainer, { backgroundColor: color }]} >
-							<Text style={styles.itemName}>{item.title}</Text>
-							<Text style={styles.venueName}>{item.venue_name}</Text>
-						</View>
+						<LinearGradient
+							colors={[color, '#22292F']}
+							style={{ ...style.shadow }}>
+							<TouchableOpacity style={[styles.itemContainer]} onPress={() =>
+								this.props.navigation.navigate('webview', {
+									url: item.url
+								})
+							}>
+								<Text style={styles.itemName}>{item.title}</Text>
+								<Text style={styles.venueName}>{item.venue_name}</Text>
+							</TouchableOpacity>
+						</LinearGradient>
 					)
 				}}
 			/>

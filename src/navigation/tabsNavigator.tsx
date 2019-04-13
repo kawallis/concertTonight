@@ -3,6 +3,7 @@ import { createBottomTabNavigator, StackActions, NavigationActions } from 'react
 import { translate, BackButton, typography, color, style, Icon } from '../shared'
 import { MainScreen, SettingsScreen, ChatScreen } from '../features/browse'
 import { Ionicons } from '@expo/vector-icons';
+import { ListNavigator } from './listNavigator';
 
 const tabImageStyle = {
     width: 25,
@@ -31,7 +32,7 @@ export const routes = {
         },
     },
     main: {
-        screen: MainScreen,
+        screen: ListNavigator,
         navigationOptions: {
             title: "List Screen",
             tabBarTestID: 'listScreen',

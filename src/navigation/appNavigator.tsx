@@ -4,7 +4,7 @@ import { TabsNavigator } from './tabsNavigator';
 
 const routes = {
   auth: { screen: AuthNavigator },
-  tabs: { screen: TabsNavigator },
+  tabs: { screen: TabsNavigator }
 }
 
 const MainNavigator = createStackNavigator(routes, {
