@@ -59,6 +59,30 @@ export const getTokens = async () => {
                 }`,
         });
         let result = await response.json();
+        let res = await fetch('https://api.spotify.com/v1/me', {
+            method: 'GET',
+            headers: {
+                'Content-Type': "application/json",
+                'Authorization': `Bearer ${result.access_token}`
+            }
+        })
+
+        let userInfo = await res.json()
+
+        let token = await fetch('https://api.spotify.com/v1/me', {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify({
+                spotifyID: userInfo.id
+            }), // body data type must match "Content-Type" header
+        })
+
+        let customToken = await token.json()
+
+        console.log(userInfo)
+        console.log(customToken)
 
         // {
         //     "access_token": "BQB-_j0zQ9WiS_FUZt0kOfJgcBwYh5zTk4NkvY1pTktPdF_WCciEGXR3U2qzF0Uy0uc1pqTtNhR6YMfGfAHcJpRCZZlg0oPJdPSSz-fCVe0UEVk2XNYn2UxHtuMw2_DC00DnGVuaAMpiG7Xw0mjIv4ygYnvuqNiIGWdo5EOnCjKHdLEQ2tSzsp4-yAEZyPwguQR2LrqFdTm0BoUeWafnjCTqeReGGzA7N9wwOYxKB9_A29qAsxGzdLmt",
@@ -67,8 +91,9 @@ export const getTokens = async () => {
         //     "scope": "playlist-read-private playlist-read-collaborative user-modify-playback-state user-library-read user-library-modify playlist-modify-private playlist-modify-public user-read-playback-state user-read-currently-playing user-read-recently-played user-top-read",
         //     "token_type": "Bearer",
         //   }
+        let firebaseRes = await firebase.auth().signInWithCustomToken(customToken)
+        console.log(firebaseRes)
 
-        console.log('RESSSS', result)
         return result
     } catch(err){
         console.error(err);
