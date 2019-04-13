@@ -49,7 +49,7 @@ export class MainScreen extends Component<Props, State> {
 	fetchEvents = async () => {
 		const params = queryString.stringify({
 			app_key: API_KEY,
-			date: "June",
+			date: "TODAY",
 			category: "music",
 			page_size: 250,
 			location: "San Francisco"
@@ -91,6 +91,11 @@ export class MainScreen extends Component<Props, State> {
 		const { events, artists } = this.state;
 
 		let spotifyArtistNames = artists.reduce((acc, item) => {
+			acc.push(item.name)
+			return acc
+		}, [])
+
+		let spotifyGenres = artists.reduce((acc, item) => {
 			acc.push(item.name)
 			return acc
 		}, [])
