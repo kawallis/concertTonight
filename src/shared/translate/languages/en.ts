@@ -1,5 +1,9 @@
 export const en = {
   common: {
+    list: 'LIST',
+    grid: ' GRID',
+    all: 'ALL',
+    curated: 'CURATED',
     ok: 'OK',
     cancel: 'CANCEL',
     delete: 'Delete',

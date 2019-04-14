@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions, AsyncStorage, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { Button, color, Icon, Line, style } from '../../shared'
+import { StyleSheet, View, Text as RNText, Dimensions, AsyncStorage, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Button, color, Icon, Line, style, typography, Text, size } from '../../shared'
 import { FlatGrid } from 'react-native-super-grid';
 import { MapContainer } from './MapContainer';
 import { Ionicons } from '@expo/vector-icons';
@@ -55,7 +55,6 @@ export class MainScreen extends Component<Props, State> {
 			location: "San Francisco"
 		})
 		fetch(`${BASE_URL}?${params}`).then(res => res.json()).then(result => {
-			console.log("Results :", result)
 			this.setState({ events: result.events.event, loading: false })
 		}).catch(e => {
 			console.log(e)
@@ -71,7 +70,6 @@ export class MainScreen extends Component<Props, State> {
 				"Content-Type": "application/json"
 			}
 		}).then(res => res.json()).then(result => {
-			console.log("Spotify results :", result)
 			this.setState({ artists: result.items, loading: false })
 		}).catch(e => {
 			console.log(e)
@@ -82,9 +80,9 @@ export class MainScreen extends Component<Props, State> {
 		if (viewStyle !== this.state.viewStyle)
 			this.setState({ viewStyle })
 	}
-	toggleListPref = listPref => {
-		if (listPref !== this.state.listPref)
-			this.setState({ listPref })
+	toggleListPref = () => {
+
+		this.setState({ listPref: this.state.listPref == 'all' ? 'curated' : 'all' })
 	}
 
 	filterEvents = () => {
@@ -117,7 +115,6 @@ export class MainScreen extends Component<Props, State> {
 	renderList = () => {
 		const { viewStyle, events, listPref } = this.state
 		const selectedEvents = this.filterEvents()
-		console.log("EVENTS =>", events)
 
 		return (
 			<FlatGrid
@@ -138,8 +135,8 @@ export class MainScreen extends Component<Props, State> {
 									url: item.url
 								})
 							}>
-								<Text style={styles.itemName}>{item.title}</Text>
-								<Text style={styles.venueName}>{item.venue_name}</Text>
+								<RNText style={styles.itemName}>{item.title}</RNText>
+								<RNText style={styles.venueName}>{item.venue_name}</RNText>
 							</TouchableOpacity>
 						</LinearGradient>
 					)
@@ -149,7 +146,7 @@ export class MainScreen extends Component<Props, State> {
 	}
 
 	render() {
-		const { events, artists, loading } = this.state
+		const { events, artists, loading, listPref } = this.state
 		if (loading || (!Array.isArray(events) || !events.length) || (!Array.isArray(artists) || !artists.length))
 			return (<View style={styles.container} ><ActivityIndicator size="large" color="#0000ff" /></View>)
 		else {
@@ -165,18 +162,61 @@ export class MainScreen extends Component<Props, State> {
 								justifyContent: "center",
 								flexDirection: "row"
 							}}>
-								<Ionicons name="md-grid" size={20} color="black" onPress={() => this.toggleViewStyle('grid')} />
-								<Text style={{ marginLeft: 10, marginRight: 10 }}>||</Text>
-								<Ionicons name="md-list" size={20} color="black" onPress={() => this.toggleViewStyle('list')} />
 							</View>
 							<View style={{
+								width: '100%',
 								alignItems: 'center',
-								justifyContent: "center",
+								justifyContent: "space-around",
 								flexDirection: "row"
 							}}>
-								<Ionicons name="ios-barcode" size={20} color="black" onPress={() => this.toggleListPref('all')} />
-								<Text style={{ marginLeft: 10, marginRight: 10 }}>||</Text>
-								<Ionicons name="ios-star" size={20} color="yellow" onPress={() => this.toggleListPref('selected')} />
+								<View style={{
+									alignItems: 'center',
+									justifyContent: "space-around",
+									flexDirection: "row"
+								}}>
+									<Ionicons name="md-grid" size={20} color="black" onPress={() => this.toggleViewStyle('grid')} />
+									<Text
+										text='common.grid'
+										style={{
+											...typography.header_1,
+											fontSize: size.large,
+											alignSelf: 'center'
+										}}
+										onPress={() => this.toggleViewStyle('grid')}
+									/>
+								</View>
+								<View style={{
+									alignItems: 'center',
+									justifyContent: "space-around",
+									flexDirection: "row"
+								}}>
+									<Ionicons name="md-list" size={20} color="black" onPress={() => this.toggleViewStyle('list')} />
+									<Text
+										text='common.list'
+										style={{
+											...typography.header_1,
+											fontSize: size.large,
+											alignSelf: 'center'
+										}}
+										onPress={() => this.toggleViewStyle('list')}
+									/>
+								</View>
+								<View style={{
+									alignItems: 'center',
+									justifyContent: "space-around",
+									flexDirection: "row"
+								}}>
+									<Ionicons name="md-grid" size={20} color="black" onPress={() => this.toggleViewStyle('curated')} />
+									<Text
+										text={listPref === 'all' ? 'common.curated' : 'common.all'}
+										style={{
+											...typography.header_1,
+											fontSize: size.large,
+											alignSelf: 'center'
+										}}
+										onPress={() => this.toggleListPref()}
+									/>
+								</View>
 
 							</View>
 						</View>

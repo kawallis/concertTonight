@@ -23,7 +23,6 @@ export class ChatScreen extends Component<Props, State> {
     }
 
     async componentDidMount() {
-        console.log(firebase.auth().currentUser.uid)
         let doc = await firebase.firestore()
             .collection("Users")
             .doc(firebase.auth().currentUser.uid).get()
@@ -89,10 +88,9 @@ export class ChatScreen extends Component<Props, State> {
                     query: msg,
                     lang: 'en',
                     sessionId: 'somerandomthing'
-                })
+                })  
             })
             let responseJson = await response.json();
-            console.log('RESPONSE', responseJson)
             const imageUrl = null;
 
             responseJson.result.fulfillment.messages.map((item, i) => {
